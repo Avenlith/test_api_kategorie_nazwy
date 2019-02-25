@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             .fetchFilms()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map { it.results }
+            .map { it.category}
             .doOnSubscribe { showProgress() }
             .doFinally { hideProgress() }
             .subscribe(
@@ -72,13 +72,13 @@ class MainActivity : AppCompatActivity() {
     super.onPause()
   }
 
-  private fun handleFetchFilmsSuccess(films: List<FilmDto>) {
+  private fun handleFetchFilmsSuccess(category: List<FilmDto>) {
 
     // Log the fact.
     Log.i(TAG, "Successfully fetched films.")
 
     // Convert to list items.
-    val items = films.sortedBy {
+    val items = category.sortedBy {
       it.id_category
     }.map {
       FilmListItem(it)
